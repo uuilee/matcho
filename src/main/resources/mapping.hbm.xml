@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ Hibernate, Relational Persistence for Idiomatic Java
+  ~
+  ~ Copyright (c) 2010, Red Hat Inc. or third-party contributors as
+  ~ indicated by the @author tags or express copyright attribution
+  ~ statements applied by the authors.  All third-party contributions are
+  ~ distributed under license by Red Hat Inc.
+  ~
+  ~ This copyrighted material is made available to anyone wishing to use, modify,
+  ~ copy, or redistribute it subject to the terms and conditions of the GNU
+  ~ Lesser General Public License, as published by the Free Software Foundation.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+  ~ or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
+  ~ for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License
+  ~ along with this distribution; if not, write to:
+  ~ Free Software Foundation, Inc.
+  ~ 51 Franklin Street, Fifth Floor
+  ~ Boston, MA  02110-1301  USA
+  -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="ch.laiw.matcho.domain">
+
+	<class name="Tournament" table="TOURNAMENT">
+        <id name="id" column="TOURNAMENT_ID">
+            <generator class="increment"/>
+        </id>
+        <property name="name" type="string" column="NAME"/>
+        <property name="startDate" type="date" column="START_DATE"/>
+        <property name="endDate" type="date" column="END_DATE"/>
+        <property name="location" type="string" column="LOCATION"/>
+        <property name="discipline" type="string" column="DISCIPLINE"/>
+        <set name="categories" table="TOURNAMENT_CATEGORIES">
+        	<key column="TOURNAMENT_ID"/>
+        	<element type="string" column="CATEGORY"/> 
+        </set>
+        <set name="participants" table="TOURNAMENT_PARTICIPANT">
+        	<key column="TOURNAMENT_ID"/>
+        	<many-to-many column="PARTICIPANT_ID" class="SingleParticipant"/> 
+        </set>
+        <set name="categories" table="TOURNAMENT_GROUPS">
+        	<key column="TOURNAMENT_ID"/>
+        	<many-to-many column="GROUP_ID" class="Group"/> 
+        </set>
+    	<property name="schedule" type="string" column="LOCATION"/>
+    </class>
+
+    <class name="SingleParticipant" table="PARTICIPANT">
+        <id name="id" column="PARTICIPANT_ID">
+            <generator class="increment"/>
+        </id>
+        <property name="firstName" type="string" column="FIRST_NAME"/>
+        <property name="lastName" type="string" column="LAST_NAME"/>
+    </class>
+    
+    
+
+</hibernate-mapping>
